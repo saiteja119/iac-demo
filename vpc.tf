@@ -51,7 +51,7 @@ resource "aws_subnet" "subnet" {
 
 
 
-resource "aws_route_table_association" "asso
+resource "aws_route_table_association" "asso"{
   subnet_id      = aws_subnet.subnet.id
   route_table_id = aws_route_table.route_table.id
 }
@@ -86,6 +86,20 @@ resource "aws_security_group" "allow_tls" {
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
+  
+  egress {
+    from_port        = 0
+    to_port          = 0
+    protocol         = "-1"
+    cidr_blocks      = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
+  }
+
+  tags = {
+    Name = "allow_Web"
+  }
+}
+
 
 
 resource "aws_network_interface" "nic" {
@@ -93,6 +107,7 @@ resource "aws_network_interface" "nic" {
   private_ips     = ["10.0.1.50"]
   security_groups = [aws_security_group.allow_tls.id]
 }
+  
 
 
 
@@ -130,15 +145,3 @@ resource "aws_instance" "web_server_instance" {
   }
 }
 
-  egress {
-    from_port        = 0
-    to_port          = 0
-    protocol         = "-1"
-    cidr_blocks      = ["0.0.0.0/0"]
-    ipv6_cidr_blocks = ["::/0"]
-  }
-
-  tags = {
-    Name = "allow_Web"
-  }
-}
