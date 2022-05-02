@@ -124,7 +124,7 @@ resource "aws_instance" "web_server_instance" {
   ami               = "ami-0851b76e8b1bce90b"
   instance_type     = "t2.micro"
   availability_zone = "ap-south-1a"
-  key_name          = "main-key"
+  key_name          = "saiteja"
 
   network_interface {
     device_index         = 0
