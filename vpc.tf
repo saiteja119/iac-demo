@@ -17,7 +17,7 @@ resource "aws_internet_gateway" "ig"{
 
 
 
-#3.create custom route table
+
 
 resource "aws_route_table" "route_table" {
   vpc_id = aws_vpc.vpc.id
@@ -37,7 +37,7 @@ resource "aws_route_table" "route_table" {
   }
 }
 
-# 4.create a subnet
+
 
 resource "aws_subnet" "subnet" {
   vpc_id            = aws_vpc.vpc.id
@@ -49,7 +49,7 @@ resource "aws_subnet" "subnet" {
   }
 }
 
-# 5.associate subnet wit route table 
+
 
 resource "aws_route_table_association" "asso
   subnet_id      = aws_subnet.subnet.id
@@ -57,7 +57,7 @@ resource "aws_route_table_association" "asso
 }
 
 
-# 6.create a security group with port 22,80,443
+
 resource "aws_security_group" "allow_tls" {
   name        = "allow_tls"
   description = "Allow TLS inbound traffic"
@@ -88,7 +88,6 @@ resource "aws_security_group" "allow_tls" {
   }
 
 
-# 7.create a nework interface with an ip that was associated with subnet at step4
 resource "aws_network_interface" "nic" {
   subnet_id       = aws_subnet.subnet.id
   private_ips     = ["10.0.1.50"]
@@ -96,7 +95,7 @@ resource "aws_network_interface" "nic" {
 }
 
 
-# 8.assign a elistic ip for the ni that for step 7
+
 
 resource "aws_eip" "eip"{
   vpc                       = true
@@ -106,7 +105,6 @@ resource "aws_eip" "eip"{
 }
 
 
-# 9.create ubuntu server and install/enable apache
 
 
 resource "aws_instance" "web_server_instance" {
